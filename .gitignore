@@ -19,10 +19,13 @@ env/
 # Environment files
 .env
 .env.*
+!.env.example
 
 # Data artifacts
-data/raw/
-data/processed/
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
 *.parquet
 *.feather
 *.pkl

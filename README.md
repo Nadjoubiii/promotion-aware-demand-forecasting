@@ -64,4 +64,30 @@ End-to-end forecasting and decision-support platform for retail demand planning 
 4. Run baseline pipeline scripts from `src/`.
 
 ## Current Status
-Project scaffold and roadmap initialized.
+
+### Completed
+- Favorita ingestion pipeline with optional Kaggle API download.
+- Processed training table build (`data/processed/training_table.parquet`).
+- Validation checks for negative units, null IDs, stockout candidates, and missing segment dates.
+- Interactive EDA notebook with:
+	- missingness profiling
+	- trend and rolling demand plots
+	- promo vs non-promo ECDF comparison
+	- segment summaries
+	- zero/negative sales checks
+	- promo uplift by cluster
+- Baseline forecasting benchmark script with time split and metrics exports.
+
+### Key Artifacts
+- EDA notebook: `notebooks/eda_notebook.ipynb`
+- Baseline script: `src/modeling/run_baseline_benchmark.py`
+- EDA outputs: `reports/eda_notebook/`
+- Baseline outputs: `reports/baseline/`
+
+### Latest Baseline Result (cluster-level, cutoff 2017-06-30)
+- `seasonal_naive_7d` outperformed `moving_avg_7d` on MAE/RMSE/MAPE.
+- Overall metrics are saved in `reports/baseline/metrics_overall.csv`.
+
+### Next Steps
+- Statistical analysis phase: promo significance tests, confidence intervals, and effect sizes.
+- Add stronger forecasting models and compare against the seasonal-naive baseline.

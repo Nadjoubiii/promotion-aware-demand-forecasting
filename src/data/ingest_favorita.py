@@ -209,6 +209,19 @@ def build_base_daily_sales(tables: dict[str, pd.DataFrame]) -> pd.DataFrame:
         .merge(oil[["date", "oil_price"]], on="date", how="left", copy=False)
     )
 
+    # Keep an explicit flag for oil values that were originally missing, then impute by time order.
+    # We impute at the daily oil series level (global signal), then map back to all rows by date.
+    merged["oil_price_missing_flag"] = merged["oil_price"].isna().astype("int8")
+    oil_daily = (
+        merged[["date", "oil_price"]]
+        .drop_duplicates(subset=["date"])
+        .sort_values("date")
+        .reset_index(drop=True)
+    )
+    oil_daily["oil_price"] = oil_daily["oil_price"].ffill().bfill()
+    oil_map = dict(zip(oil_daily["date"], oil_daily["oil_price"]))
+    merged["oil_price"] = merged["date"].map(oil_map).astype("float32")
+
     merged["on_promotion"] = merged["on_promotion"].fillna(False)
     merged["is_holiday_event"] = merged["is_holiday_event"].fillna(False)
     merged = merged.sort_values(["store_id", "product_id", "date"]).reset_index(drop=True)

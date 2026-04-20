@@ -1,0 +1,2 @@
+scope,n_obs,r_squared,breusch_pagan_lm_pvalue,breusch_pagan_f_pvalue,ljung_box_pvalue_lag7,ljung_box_pvalue_lag14,residual_std,heteroskedasticity_flag,autocorrelation_flag_lag7,autocorrelation_flag_lag14
+overall_cluster_day,28399,0.38405289913728546,0.0,0.0,0.0,0.0,22934.723024584786,True,True,True

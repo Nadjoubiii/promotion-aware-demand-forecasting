@@ -14,18 +14,19 @@
   - Negative units/prices.
   - Potential stockout periods.
 
-## Phase 2: Statistical Analysis Layer (Week 2)
+## Phase 2: Statistical Analysis Layer (Week 2, completed)
 - Exploratory decomposition by segment (trend/seasonality/event effects).
 - Hypothesis testing:
   - Promotion uplift significance by category/store cluster.
   - Holiday impact significance.
   - Mean/variance comparison pre-vs-post campaign windows.
 - Distribution diagnostics:
-  - Count-data behavior (Poisson/NegBin suitability checks).
-  - Heteroskedasticity and residual structure checks.
-- Effect size and confidence intervals for business actions.
+  - Count-data behavior (Poisson/NegBin suitability checks) completed via `src/stats/run_distribution_diagnostics.py` and `reports/stats/distribution_count_diagnostics_*.csv`.
+  - Heteroskedasticity and residual structure checks completed via `reports/stats/residual_diagnostics_*.csv`.
+- Effect size and confidence intervals for business actions completed via `src/stats/run_business_action_effects.py` and `reports/stats/business_action_effects.csv`.
 - Cannibalization analysis:
-  - Difference-in-differences style checks across nearby/control stores.
+  - Difference-in-differences style checks across cluster-matched control stores completed via `src/stats/run_cannibalization_did.py` and `reports/stats/cannibalization_did_by_cluster_product_class.csv`.
+  - Current result: no statistically strong negative cannibalization flags in the first DiD pass.
 
 ## Phase 3: Forecasting Models (Week 3-4)
 - Baselines: seasonal naive, moving average, simple regression.

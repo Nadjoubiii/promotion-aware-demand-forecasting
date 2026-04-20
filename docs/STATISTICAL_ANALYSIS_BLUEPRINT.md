@@ -34,6 +34,13 @@ Demand forecasting quality depends on understanding causal and structural demand
 - Calibration checks by segment
 - Risk-tier labels for operational use
 
+## Implemented outputs in this repo
+- Promotion significance tables: `reports/stats/promo_significance_by_cluster.csv`, `reports/stats/promo_significance_by_store_id.csv`
+- Business-action effects with bootstrap CIs: `reports/stats/business_action_effects.csv`
+- Count-distribution diagnostics: `reports/stats/distribution_count_diagnostics_overall.csv`, `reports/stats/distribution_count_diagnostics_by_cluster.csv`
+- Residual diagnostics: `reports/stats/residual_diagnostics_overall.csv`, `reports/stats/residual_diagnostics_by_cluster.csv`
+- Cannibalization DiD table: `reports/stats/cannibalization_did_by_cluster_product_class.csv`
+
 ## Recommended outputs per sprint
 - Statistical memo (1-2 pages): findings and business interpretation.
 - Notebook with diagnostics and test results.

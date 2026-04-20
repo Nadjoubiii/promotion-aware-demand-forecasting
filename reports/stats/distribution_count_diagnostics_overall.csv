@@ -1,0 +1,2 @@
+scope,n_obs,mean_units,variance_units,dispersion_ratio,observed_zero_rate,poisson_expected_zero_rate,zero_inflation_gap,nb_alpha_estimate,poisson_suitable_flag,negbin_preferred_flag
+row_level_overall,125497040,8.554865268447763,557.2031920165741,65.13290093201852,0.0,0.00019260573766883136,-0.00019260573766883136,7.49665820788024,False,True

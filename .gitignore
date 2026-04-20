@@ -35,6 +35,9 @@ mlruns/
 # Jupyter
 .ipynb_checkpoints/
 
+# Model training temp artifacts
+catboost_info/
+
 # IDE/editor
 .vscode/
 .idea/

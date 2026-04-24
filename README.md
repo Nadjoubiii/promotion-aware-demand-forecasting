@@ -90,11 +90,25 @@ End-to-end forecasting and decision-support platform for retail demand planning 
 - Modeling outputs: `reports/modeling/`
 
 ### Latest Statistical Findings
-- Promotion uplift is strongly positive across all 17 clusters in the action-effects pass, with top clusters showing roughly 97% to 138% uplift and large Cohen's d values.
-- Holiday effects are actionable in 12 clusters with positive bootstrap confidence intervals.
-- Row-level demand is heavily overdispersed (`dispersion_ratio` about 65 overall), so Negative Binomial assumptions fit better than Poisson.
-- Residual diagnostics on cluster-day aggregates still show heteroskedasticity and autocorrelation across all clusters, which justifies moving beyond simple linear count assumptions.
-- The current cluster-matched DiD cannibalization pass found no statistically strong negative spillover effects under the available control design.
+
+- Summary: Statistical analyses confirm strong, reproducible promotion and holiday uplifts, and identify important distributional features of demand (overdispersion and residual correlation) that informed model choices and uncertainty quantification.
+
+- Promotion & Holiday Effects: Bootstrap-estimated effect sizes show consistently positive, and often large, uplift from promotions (top clusters ~97%–138%). Holiday effects are actionable in 12 clusters. Effect sizes were reported as Cohen's d and supported by bootstrap 95% confidence intervals; significance was adjusted with FDR to control false positives across many tests.
+
+- Count Distribution Diagnostics: Row-level demand exhibits strong overdispersion and modest zero-inflation. The estimated dispersion ratio (~65) and likelihood comparisons favor Negative Binomial over Poisson for count-modeling assumptions. This motivated using dispersion-aware loss functions and model choices that handle heavy-tailed count behavior.
+
+- Residual Diagnostics & Robust Errors: Residuals from cluster-aggregated fits show heteroskedasticity (Breusch–Pagan) and short-range autocorrelation (Ljung–Box), so prediction intervals and inference use robust standard errors, block bootstrap for serial dependence, and conservative CI estimators where appropriate.
+
+- Difference-in-Differences (Cannibalization): A cluster-matched DiD pipeline tested spillovers using matched controls, covariate balance checks, and bootstrap CIs. Under the chosen control design and sample sizes, we found no strong evidence of negative cannibalization effects. Notes: control selection is conservative by design; relaxing matching thresholds increases power but may reduce causal validity.
+
+- Reproducibility & Artifacts: All analyses are reproducible via `src/stats/` scripts and produce CSV outputs in `reports/stats/`. Key scripts:
+  - `src/stats/run_distribution_diagnostics.py` — dispersion, zero-inflation, and residual tests
+  - `src/stats/run_business_action_effects.py` — bootstrap uplifts, Cohen's d, FDR correction
+  - `src/stats/run_cannibalization_did.py` — matched DiD cannibalization checks
+
+- Practical Implications: Use Negative Binomial or dispersion-aware ML losses for forecasting; retain robust/resampled CIs for business decisions; treat promotion uplift estimates as actionable inputs for inventory and pricing decisions; continue monitoring for localized spillovers (re-run DiD periodically as campaigns change).
+
+For reproducible outputs and detailed tables/figures, see `reports/stats/`.
 
 ### Latest Modeling Findings
 - Single-split leader: XGBoost.

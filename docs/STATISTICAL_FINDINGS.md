@@ -55,3 +55,11 @@ cluster,n_obs,r_squared,breusch_pagan_lm_pvalue,breusch_pagan_f_pvalue,ljung_box
 For full tables and figures, see the CSVs and images in `reports/stats/`.
 
 If you want, I can also embed the top plots (PNG/SVG) from `reports/stats/` into this doc.
+
+Embedded diagnostic plots
+
+![Dispersion ratio overall](reports/stats/dispersion_overall.png)
+
+![Top promotion uplift_pct (top 10 clusters)](reports/stats/promotions_top10_uplift.png)
+
+![Residual std by cluster](reports/stats/residuals_by_cluster.png)

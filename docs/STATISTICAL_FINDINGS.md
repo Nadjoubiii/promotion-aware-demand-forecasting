@@ -58,7 +58,7 @@ If you want, I can also embed the top plots (PNG/SVG) from `reports/stats/` into
 
 Embedded diagnostic plots
 
-![Dispersion ratio overall](reports/stats/dispersion_overall.png)
+Dispersion ratio (overall): 65.13 (from `reports/stats/distribution_count_diagnostics_overall.csv`)
 
 ![Top promotion uplift_pct (top 10 clusters)](reports/stats/promotions_top10_uplift.png)
 

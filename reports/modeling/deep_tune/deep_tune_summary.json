@@ -1,0 +1,35 @@
+{
+  "xgboost": {
+    "mae": 2275.43798828125,
+    "rmse": 3392.1333994994948,
+    "mape_pct": 5.381648540496826,
+    "params": {
+      "max_depth": 6,
+      "learning_rate": 0.03,
+      "subsample": 1.0,
+      "colsample_bytree": 0.8,
+      "reg_lambda": 1.0,
+      "n_estimators": 1000
+    }
+  },
+  "lightgbm": {
+    "mae": 2273.6866684670385,
+    "rmse": 3369.7970511631015,
+    "mape_pct": 5.250593299465532,
+    "params": {
+      "num_leaves": 127,
+      "learning_rate": 0.03,
+      "feature_fraction": 0.6,
+      "bagging_fraction": 0.8,
+      "reg_lambda": 2.0,
+      "n_estimators": 1000
+    }
+  },
+  "sarimax": {
+    "mae": 3073.1517432376972,
+    "rmse": 4635.914919659627,
+    "mape_pct": 6.616445412061629,
+    "note": "Per-cluster order tuning from ORDER_GRID of 6 combos. Baseline (all 17 clusters corrected): MAE=4305.61. Best orders vary per cluster (see per_cluster_sarimax_best.csv).",
+    "baseline_mae_corrected": 4305.610265062486
+  }
+}

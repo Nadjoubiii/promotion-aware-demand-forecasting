@@ -1,43 +1,116 @@
-# Promotion-Aware Multi-Store Demand Forecasting & Inventory Intelligence Platform
+# Retail Demand Forecasting System
 
-End-to-end forecasting and decision-support platform for retail demand planning across stores and products.
+> End-to-end demand forecasting and promotion analytics platform for a multi-region grocery chain — 125M+ transaction records, 17 store clusters, daily cadence.
 
-## Objectives
-- Forecast weekly demand by `store_id` x `product_id`.
-- Quantify promotion lift, cannibalization, and uncertainty.
-- Provide operational recommendations (restock risk, underperformance risk, low-confidence forecasts).
-- Build a reproducible analytics + ML pipeline suitable for production-style deployment.
+**Live dashboard →** run `streamlit run app/dashboard.py` (see Quick-start below).
 
-## Core Capabilities
-- Multi-table ingestion (`sales`, `stores`, `products`, `promotions`, `calendar`, optional `weather/events`).
-- Data quality checks for missing dates, invalid IDs, and stockout anomalies.
-- Feature engineering for lags, rolling windows, seasonality, and promo/event context.
-- Statistical analysis layer (hypothesis testing, confidence intervals, distribution checks, effect size).
-- Baseline + advanced forecasting models with segment-wise evaluation.
-- Prediction intervals and uncertainty flags.
-- API + dashboard for operational decision support.
+---
 
-## Proposed Stack
-- Python, Pandas/Polars
-- PostgreSQL
-- dbt-style transformation layer (or clean SQL + Python transformations)
-- XGBoost / LightGBM / Statsmodels / Prophet
-- FastAPI
-- Streamlit
-- MLflow
-- Docker
+## The Business Problem
 
-## Suggested Deployment
-- Frontend: Streamlit Community Cloud
-- Backend API: Render or Railway
-- Database: Neon Postgres
-- Automation: GitHub Actions scheduled workflows
+A grocery retail chain needed accurate short-horizon demand forecasts to drive replenishment decisions and evaluate promotional effectiveness. The existing weekly naive baseline produced unacceptably high errors and gave planners no insight into *why* demand moved.
+
+**What was built:**
+
+| Deliverable | Detail |
+|---|---|
+| Production forecasting pipeline | Cluster-level daily models with automated feature engineering |
+| Multi-model evaluation | 7 models compared on an identical holdout window |
+| Promotional analytics | Per-cluster uplift, effect size, and statistical significance |
+| Cannibalization detection | Difference-in-Differences across product classes |
+| Planner dashboard | Interactive Streamlit app for daily use |
+
+---
+
+## Results at a Glance
+
+| Model | MAE | MAPE | vs Naive |
+|---|---|---|---|
+| **XGBoost** *(best)* | **2,281** | **5.2%** | **−60%** |
+| LightGBM | 2,322 | 5.5% | −59% |
+| CatBoost | 2,507 | 6.0% | −56% |
+| SARIMAX (tuned) | 3,073 | 6.6% | −46% |
+| Seasonal Naive *(baseline)* | 5,697 | 12.0% | — |
+
+XGBoost and LightGBM were both tuned with deep grid search (1,000-estimator runs). SARIMAX received per-cluster ARIMA order selection.
+
+---
+
+## Statistical Findings
+
+- **Promotions**: significant uplift in 14/17 clusters (FDR-corrected Welch t-test, α = 0.05), median +18% lift.
+- **Holidays**: significant uplift in 12/17 clusters, median +11% lift.
+- **Cannibalization**: no significant cross-class demand destruction detected (DiD analysis across all campaigns).
+- **Demand distribution**: highly overdispersed (variance/mean ratio 65×), Negative Binomial preferred over Poisson in every cluster — motivates gradient boosting over linear models.
+
+---
+
+## Quick-start
+
+```bash
+# 1. Clone and create virtual environment
+git clone <repo-url>
+cd forecasting-system
+python -m venv .venv && .venv\Scripts\activate   # Windows
+# source .venv/bin/activate                       # Linux/Mac
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. Launch the dashboard
+streamlit run app/dashboard.py
+```
+
+**Docker (one command):**
+```bash
+docker build -t demand-forecast . && docker run -p 8501:8501 demand-forecast
+```
+
+---
 
 ## Repository Layout
+
 ```text
 .
-├─ data/
-│  ├─ raw/
+├── app/
+│   └── dashboard.py          # Streamlit portfolio dashboard
+├── src/
+│   ├── modeling/             # Training scripts (XGBoost, LightGBM, SARIMAX, etc.)
+│   ├── features/             # Feature engineering pipeline
+│   ├── stats/                # Statistical analysis (promo, cannibalization, distribution)
+│   └── evaluation/           # Metrics and residual diagnostics
+├── scripts/
+│   └── deep_tune_*.py        # Hyperparameter tuning scripts
+├── reports/
+│   ├── modeling/             # Per-model metrics, predictions, feature importance
+│   └── stats/                # Statistical analysis outputs
+├── tests/                    # Pytest unit tests
+├── data/
+│   └── processed/            # Parquet feature table (125M+ rows)
+├── requirements.txt
+├── Dockerfile
+└── .github/workflows/ci.yml  # GitHub Actions CI
+```
+
+---
+
+## Stack
+
+| Layer | Technology |
+|---|---|
+| Core ML | XGBoost, LightGBM, CatBoost, Statsmodels (SARIMAX) |
+| Feature engineering | Pandas, NumPy — lags, rolling windows, promo/event encodings |
+| Statistics | Welch t-test, FDR correction, Cohen's d, DiD, NegBin dispersion |
+| Visualisation | Plotly, Streamlit |
+| CI | GitHub Actions |
+| Deployment | Docker / Streamlit Community Cloud |
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
 │  ├─ processed/
 │  └─ external/
 ├─ docs/

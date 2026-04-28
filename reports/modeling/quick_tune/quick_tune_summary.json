@@ -1,0 +1,36 @@
+{
+  "xgboost": {
+    "mae": 2310.410888671875,
+    "rmse": 3403.7858334507473,
+    "mape_pct": 5.45041036605835,
+    "params": {
+      "max_depth": 6,
+      "learning_rate": 0.1,
+      "subsample": 0.8,
+      "colsample_bytree": 0.6,
+      "reg_lambda": 0.5
+    }
+  },
+  "lightgbm": {
+    "mae": 2391.829543999201,
+    "rmse": 3640.750504808351,
+    "mape_pct": 5.574694287667668,
+    "params": {
+      "num_leaves": 63,
+      "learning_rate": 0.1,
+      "feature_fraction": 1.0,
+      "bagging_fraction": 1.0,
+      "reg_lambda": 2.0
+    }
+  },
+  "sarimax": {
+    "mae": 27010.793276298304,
+    "rmse": 36589.22691539723,
+    "mape_pct": 56.9206839783705,
+    "order": [
+      1,
+      1,
+      0
+    ]
+  }
+}

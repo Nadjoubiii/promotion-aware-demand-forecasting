@@ -47,7 +47,7 @@ def fit_predict_one_cluster(train_cluster: pd.DataFrame, valid_cluster: pd.DataF
     )
     fitted = model.fit(disp=False)
     preds = fitted.forecast(steps=len(valid_cluster), exog=valid_cluster[EXOGENOUS_COLS])
-    return pd.Series(preds, index=valid_cluster.index)
+    return pd.Series(preds.values, index=valid_cluster.index)
 
 
 def main() -> None:

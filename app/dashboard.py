@@ -378,7 +378,7 @@ with tab_results:
                   <div class="kpi-sub">RMSE {f(info['rmse'])} · MAPE {info['mape_pct']:.2f}%</div>
                 </div>""", unsafe_allow_html=True)
                 if "params" in info:
-                    with st.expander("Best params", expanded=False):
+                    with st.expander("", expanded=False):
                         st.json(info["params"])
                 elif "note" in info:
                     st.caption(info["note"])
